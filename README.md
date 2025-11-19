@@ -47,6 +47,41 @@ curl -fsSL https://ollama.com/install.sh | sh
 ollama pull nomic-embed-text llama3.2:3b
 ```
 
+> **Windows note:** `sqlite-vss` does not currently ship prebuilt wheels for
+> Windows. Pick one of the options below before continuing with the install:
+>
+> 1. **Use WSL** – recommended if you already have Windows Subsystem for Linux
+>    enabled. Run the Linux prerequisites above inside WSL and install normally.
+> 2. **Build `sqlite-vss` from source on Windows** – requires the Rust toolchain
+>    and Microsoft’s C++ Build Tools.
+
+### Building `sqlite-vss` on Windows (Manual)
+
+1. Install [Visual Studio Build Tools](https://visualstudio.microsoft.com/downloads/) with the *C++ build tools* workload.
+2. Install the Rust toolchain via [rustup](https://rustup.rs/).
+3. Install `maturin` into your virtual environment: `pip install maturin`.
+4. Clone the upstream project and build the wheel:
+
+   ```powershell
+   git clone https://github.com/asg017/sqlite-vss.git
+   cd sqlite-vss\python
+   maturin build --release --strip
+   ```
+
+   The wheel will be written to `python\target\wheels\`.
+
+5. Install the resulting wheel into your ThoughtStream environment:
+
+   ```powershell
+   pip install .\target\wheels\sqlite_vss-*.whl
+   ```
+
+6. Return to the ThoughtStream repo and continue with `pip install -e .`.
+
+If you prefer to run without vector search for now, comment out or remove
+`sqlite-vss` from `pyproject.toml` and set `llm.hybrid_search` to `false` in
+your config; the daemon will operate without the hybrid similarity index.
+
 ### One-Click Install
 
 ```bash

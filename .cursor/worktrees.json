@@ -1,5 +1,4 @@
 {
-  "setup-worktree": [
-    "pip install -e ."
-  ]
+  "setup_command": "pip install -e ."
 }
+
