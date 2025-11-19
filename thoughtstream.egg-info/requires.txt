@@ -1,0 +1,8 @@
+ollama
+pynput
+pyperclip
+rich
+typer
+pyyaml
+cryptography
+aiohttp
